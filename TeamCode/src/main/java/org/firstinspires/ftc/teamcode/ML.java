@@ -4,31 +4,34 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @Autonomous
 public class ML extends LinearOpMode
 {
 
-    public static DcMotor rightFront;
-    public static DcMotor rightRear;
-    public static DcMotor leftFront;
-    public static DcMotor leftRear;
-    public static DcMotor intake;
+    public static DcMotorEx rightFront;
+    public static DcMotorEx rightRear;
+    public static DcMotorEx leftFront;
+    public static DcMotorEx leftRear;
+    public static DcMotorEx intake;
     //public static DcMotor liftL;
     //public static DcMotor liftR;
-    public static DcMotor arm;
+    public static DcMotorEx arm;
     //public static Servo clawL;
     //public static Servo clawR;
     //public static CRServo arm1;
     //public static CRServo arm2;
     @Override
     public void runOpMode() throws InterruptedException {
-        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
-        leftRear = hardwareMap.get(DcMotor.class, "leftRear");
-        rightFront = hardwareMap.get(DcMotor.class, "rightFront");
-        rightRear = hardwareMap.get(DcMotor.class, "rightRear");
-        intake = hardwareMap.get(DcMotor.class, "intake");
+        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
+        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
+        intake = hardwareMap.get(DcMotorEx.class, "intake");
 
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -46,11 +49,24 @@ public class ML extends LinearOpMode
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
+    public static void forward(int v)
+    {
+        move(v,0);
+    }
+    public static void strafe(int v)
+    {
+        move(v,1);
+    }
+    public static void turn(double n)
+    {
+        move((int)(400*n), 2); //positive is left
+    }
     public static void move(int d, int mode) {
-        leftFront.setPower(.4);
-        leftRear.setPower(.4);
-        rightFront.setPower(.4);
-        rightRear.setPower(.4);
+        leftFront.setVelocity(.4, AngleUnit.RADIANS);
+        leftRear.setVelocity(.4, AngleUnit.RADIANS);
+        rightFront.setVelocity(.4, AngleUnit.RADIANS);
+        rightRear.setVelocity(.4, AngleUnit.RADIANS);
         /** mode is to determine if the robot is
          * driving straight, strafing, or turning
          * using 0, 1, or 2 respectively for each mode
@@ -68,19 +84,17 @@ public class ML extends LinearOpMode
             rightRear.setTargetPosition(-d);
         }
         if (mode == 2) {
-            leftFront.setTargetPosition(d);
-            leftRear.setTargetPosition(d);
-            rightFront.setTargetPosition(-d);
-            rightRear.setTargetPosition(-d);
+            leftFront.setTargetPosition(-d);
+            leftRear.setTargetPosition(-d);
+            rightFront.setTargetPosition(d);
+            rightRear.setTargetPosition(d);
         }
         leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         while ( leftRear.getCurrentPosition() != d) {
-            //sleep(10); ADD TIMER
         }
-        //sleep(200);
         leftFront.setPower(0);
         leftRear.setPower(0);
         rightFront.setPower(0);

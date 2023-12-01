@@ -3,9 +3,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
@@ -21,23 +23,27 @@ public class ML extends LinearOpMode
     //public static DcMotor liftL;
     //public static DcMotor liftR;
     public static DcMotorEx arm;
+    public static CRServo rotate;
     //public static Servo clawL;
     //public static Servo clawR;
     //public static CRServo arm1;
     //public static CRServo arm2;
     @Override
     public void runOpMode() throws InterruptedException {
-        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
-        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
+        leftFront = hardwareMap.get(DcMotorEx.class,"leftFront");
+        leftRear = hardwareMap.get(DcMotorEx.class,"leftRear");
+        rightFront = hardwareMap.get(DcMotorEx.class,"rightFront");
+        rightRear = hardwareMap.get(DcMotorEx.class,"rightRear");
+        intake = hardwareMap.get(DcMotorEx.class,"intake");
+        arm = hardwareMap.get(DcMotorEx.class,"arm");
+        rotate = hardwareMap.get(CRServo.class,"rotate");
 
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
         intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        arm.setDirection(DcMotorSimple.Direction.FORWARD);
 
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -48,6 +54,8 @@ public class ML extends LinearOpMode
         leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        telemetry.addData("Say", "Hello Driver");
+
     }
 
     public static void forward(int v)

@@ -43,9 +43,12 @@ import org.firstinspires.ftc.robotcore.internal.camera.delegating.DelegatingCapt
  */
 @Autonomous (name = "Auto")
 public class Auto extends LinearOpMode {
-
+    private com.qualcomm.robotcore.eventloop.opmode.LinearOpMode LinearOpMode;
+    private ML ml = new ML(LinearOpMode);
     @Override
     public void runOpMode() throws InterruptedException {
+
+        ml.iniit();
 
         waitForStart();
 

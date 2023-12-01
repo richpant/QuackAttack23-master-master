@@ -13,9 +13,10 @@ public class Testing_Code extends OpMode {
 
     @Override
     public void init() {
-
         //clawL.setPosition(.5);
         //clawR.setPosition(.5);
+        //ML ml = new ML(Opmode);//Cu f***ed this up
+        //ml.iniit();
 
         ML.leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         ML.leftRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -32,7 +33,7 @@ public class Testing_Code extends OpMode {
         double x = (1.4142135624 * gamepad1.left_stick_x) /2;
         double s = gamepad1.right_stick_x;
 
-       ML.leftFront.setPower(y - x - s);
+        ML.leftFront.setPower(y - x - s);
         ML.leftRear.setPower(y + x - s);
         ML.rightFront.setPower(y + x + s);
         ML.rightRear.setPower(y - x + s);

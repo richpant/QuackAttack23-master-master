@@ -50,8 +50,8 @@ public class AutoBlueCenter extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         waitForStart();
-        ML.move(0,0);
-        ML.move(400,2);// -pi/2
+        ML.forward(1000);
+        ML.turn(400);// pi/2
         //code
     }
 }

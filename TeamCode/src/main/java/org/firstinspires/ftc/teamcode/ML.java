@@ -7,15 +7,13 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@Autonomous
-public class ML extends LinearOpMode
+public class ML
 {
 
-    private LinearOpMode mlOpMode = null;
+    private LinearOpMode myOpMode = null;
     public static DcMotorEx rightFront;
     public static DcMotorEx rightRear;
     public static DcMotorEx leftFront;
@@ -29,43 +27,56 @@ public class ML extends LinearOpMode
     //public static Servo clawR;
     //public static CRServo arm1;
     //public static CRServo arm2;
-    //public void iniit() throws InterruptedException { runOpMode();}
+    public static double pi = Math.PI;
+    public static double π = pi;
+    // π = alt + 227
+
 
     public ML (LinearOpMode opmode) {
-        mlOpMode = opmode;
+        myOpMode = opmode;
     }
+    public void init(){
+        leftFront = myOpMode.hardwareMap.get(DcMotorEx.class,"leftFront");
+        leftRear = myOpMode.hardwareMap.get(DcMotorEx.class,"leftRear");
+        rightFront = myOpMode.hardwareMap.get(DcMotorEx.class,"rightFront");
+        rightRear = myOpMode.hardwareMap.get(DcMotorEx.class,"rightRear");
+        intake = myOpMode.hardwareMap.get(DcMotorEx.class,"intake");
+        arm = myOpMode.hardwareMap.get(DcMotorEx.class,"arm");
+        rotate = myOpMode.hardwareMap.get(CRServo.class,"rotate");
 
-    //@Override
-    public void iniit(){
-        ML.leftFront = mlOpMode.hardwareMap.get(DcMotorEx.class,"leftFront");
-        ML.leftRear = mlOpMode.hardwareMap.get(DcMotorEx.class,"leftRear");
-        ML.rightFront = mlOpMode.hardwareMap.get(DcMotorEx.class,"rightFront");
-        ML.rightRear = mlOpMode.hardwareMap.get(DcMotorEx.class,"rightRear");
-        ML.intake = mlOpMode.hardwareMap.get(DcMotorEx.class,"intake");
-        ML.arm = mlOpMode.hardwareMap.get(DcMotorEx.class,"arm");
-        ML.rotate = mlOpMode.hardwareMap.get(CRServo.class,"rotate");
-
-        ML.leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        ML.leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
-        ML.rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        ML.rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
-        ML.intake.setDirection(DcMotorSimple.Direction.FORWARD);
-        ML.arm.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        ML.leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        ML.leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        ML.rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        ML.rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        ML.leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        ML.leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        ML.rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        ML.rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        telemetry.addData("Say", "Hello Driver");
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightRear.setDirection(DcMotorSimple.Direction.FORWARD);
+        intake.setDirection(DcMotorSimple.Direction.FORWARD);
+        arm.setDirection(DcMotorSimple.Direction.FORWARD);
 
     }
+    public void iauto() {
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-    public void runOpMode(){}
+        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+    public void iTeleOp() {
+        leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public static void drive(double y, double x, double s) {
+        leftFront.setPower(y - x - s);
+        leftRear.setPower(y + x - s);
+        rightFront.setPower(y + x + s);
+        rightRear.setPower(y - x + s);
+    }
+    
     public static void forward(int v)
     {
         move(v,0);
@@ -76,13 +87,13 @@ public class ML extends LinearOpMode
     }
     public static void turn(double n)
     {
-        move((int)(400*n), 2); //positive is left
+        move((int)(400*n), 2); //Widdershins
     }
     public static void move(int d, int mode) {
-        leftFront.setVelocity(.4, AngleUnit.RADIANS);
-        leftRear.setVelocity(.4, AngleUnit.RADIANS);
-        rightFront.setVelocity(.4, AngleUnit.RADIANS);
-        rightRear.setVelocity(.4, AngleUnit.RADIANS);
+        leftFront.setVelocity(pi/4, AngleUnit.RADIANS);
+        leftRear.setVelocity(pi/4, AngleUnit.RADIANS);
+        rightFront.setVelocity(pi/4, AngleUnit.RADIANS);
+        rightRear.setVelocity(pi/4, AngleUnit.RADIANS);
         /** mode is to determine if the robot is
          * driving straight, strafing, or turning
          * using 0, 1, or 2 respectively for each mode
@@ -119,13 +130,8 @@ public class ML extends LinearOpMode
         leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //sleep(200);
     }
-    public static void Intake(int p, int s) {
-
+    public static void Intake(int p) {
         intake.setPower(p);
-        //sleep(s);
-        intake.setPower(0);
-        //sleep(200);
     }
 }

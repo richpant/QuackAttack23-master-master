@@ -27,9 +27,9 @@ public class Testing_Code extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            double y = (1.4142135624 * gamepad1.left_stick_y) /2;
-            double x = (1.4142135624 * gamepad1.left_stick_x) /2;
-            double s = gamepad1.right_stick_x;
+            double y = -(1.4142135624 * gamepad1.left_stick_y) /2;
+            double x = -(1.4142135624 * gamepad1.left_stick_x) /2;
+            double s = -gamepad1.right_stick_x;
 
             ML.drive(y,x,s);
 
@@ -61,12 +61,10 @@ public class Testing_Code extends LinearOpMode {
             }
 
             if (gamepad1.x) {
-                ML.rotate.setPower(1);
+                ML.rotate.setPower(.53);
             }
             else if (gamepad1.y) {
-                ML.rotate.setPower(-1);
-            } else {
-                ML.rotate.setPower(0);
+                ML.rotate.setPower(.08);
             }
         /*
         if (gamepad1.b) {

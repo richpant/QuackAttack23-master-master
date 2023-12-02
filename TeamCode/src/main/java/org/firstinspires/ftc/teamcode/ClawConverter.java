@@ -209,7 +209,7 @@ public class ClawConverter //This will F up in jGrasp, needs to be executed in A
                     getPrimeReg(stiHoriz, stiVert);
                     ultiPrimeMove(aPR*stagSec,bPR,wPM*stagSec);//*stagSec for servos only
 
-                }
+                } //perchance swap long in params
             }
         }, 0L, (long) stagLen); //occurs every 20 milisec
     }

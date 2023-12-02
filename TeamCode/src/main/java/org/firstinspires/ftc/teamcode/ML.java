@@ -90,10 +90,10 @@ public class ML
         move((int)(400*n), 2); //Widdershins
     }
     public static void move(int d, int mode) {
-        leftFront.setVelocity(pi/4, AngleUnit.RADIANS);
-        leftRear.setVelocity(pi/4, AngleUnit.RADIANS);
-        rightFront.setVelocity(pi/4, AngleUnit.RADIANS);
-        rightRear.setVelocity(pi/4, AngleUnit.RADIANS);
+        leftFront.setPower(.4);
+        leftRear.setPower(.4);
+        rightFront.setPower(.4);
+        rightRear.setPower(.4);
         /** mode is to determine if the robot is
          * driving straight, strafing, or turning
          * using 0, 1, or 2 respectively for each mode
